@@ -12,5 +12,9 @@ def index():
     #     return(render_template("index.html",result="waiting"))
     return(render_template("index.html"))
 
+@app.route("/gemini",methods=["GET","POST"])
+def gemini():
+    return(render_template("gemini.html"))
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)
