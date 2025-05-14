@@ -8,7 +8,7 @@ class Config:
     """Configuration class for the application."""
     
     # Try to get API key from environment variable, fall back to hardcoded value if not found
-    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyBf_C_bV9mPzvwOkwI9Hqzyxx_6QJdPYc8')
+    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
     
     # Add other configuration variables as needed
     # DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'

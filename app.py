@@ -20,11 +20,12 @@ def gemini_reply():
     q = request.form.get("q")
     print('q', q)
     model = genai.GenerativeModel('gemini-1.5-flash-8b')
-
+    # model = genai.GenerativeModel('gemini-2.0-flash')
     r = model.generate_content(q)
     r = r.text
 
-    return(render_template("gemini_reply.html",r=r))
+    return(render_template("gemini_reply.html", r=r))
 
 if __name__ == "__main__":
-    app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)
+    # app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)
+    app.run()
