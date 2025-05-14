@@ -11,6 +11,6 @@ class Config:
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyBf_C_bV9mPzvwOkwI9Hqzyxx_6QJdPYc8')
     
     # Add other configuration variables as needed
-    DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
-    PORT = int(os.environ.get('PORT', 5002))
-    HOST = os.environ.get('HOST', '0.0.0.0') 
+    # DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+    # PORT = int(os.environ.get('PORT', 5002))
+    # HOST = os.environ.get('HOST', '0.0.0.0') 
