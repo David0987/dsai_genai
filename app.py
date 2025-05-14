@@ -1,11 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 import google.generativeai as genai
 from config import Config
+import os
+
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 # Configure the Gemini API with the key from Config
+genai.configure(api_key=gemini_api_key)
 genai.configure(api_key=Config.GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash-8b')
-# genai.configure(api_key=Config.GEMINI_API_KEY)
+
 
 app = Flask(__name__)
 
@@ -21,7 +25,7 @@ def gemini():
 def gemini_reply():
     q = request.form.get("q")
     print('q', q)
-    # model = genai.GenerativeModel('gemini-2.0-flash')
+
     r = model.generate_content(q)
     r = r.text
 
