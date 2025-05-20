@@ -2,11 +2,18 @@
     <meta name ="viewport" content ="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
 </head>
+
 <body>
     <div class="container">
-        <h6>reply message:{{r}}</h6>
-        <form action="/" method="post">        
+        <div class="reply-container">
+            <h3>Gemini's Response:</h3>
+            <div class="reply-content">
+                {{r}}
+            </div>
+        </div>
+        <form action="/main" method="get">      
             <input type="submit" value="Main">
         </form>
     </div>
 </body>
+

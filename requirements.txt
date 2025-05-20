@@ -3,3 +3,4 @@ gunicorn
 google-generativeai
 google-auth
 python-dotenv
+pysqlite3
