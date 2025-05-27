@@ -84,7 +84,7 @@ def user_log():
 
 @app.route("/telegram",methods=["GET","POST"])
 def telegram():
-    try:
+    if request.method == "POST":
         data = request.get_json()
         if not data:
             return render_template("telegram.html", r_text='Telegram Started')
@@ -111,13 +111,8 @@ def telegram():
         )
         response.raise_for_status()
         return 'ok', 200
-    except requests.exceptions.RequestException as e:
-        print(f"Error sending message to Telegram: {e}")
-        return 'error', 404
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        return render_template("telegram.html", r_text='An error occurred')
-
+    else:
+        return render_template("telegram.html", r_text='Telegram Started')
 
 @app.route("/delete_log",methods=["GET","POST"])
 def delete_log():
