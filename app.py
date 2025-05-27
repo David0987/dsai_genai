@@ -7,7 +7,7 @@ import datetime
 import requests
 
 # set up telegram webhook
-# curl -F "url=https://dsai-genai-ok5a.onrender.com/telegram" https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/setWebhook
+# curl -F "url=https://dsai-genai-ok5a.onrender.com/telegram" https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/setWebhook
 
 
 gemini_api_key = os.getenv("GEMINI_API_KEY")
