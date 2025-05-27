@@ -85,11 +85,14 @@ def user_log():
 
 @app.route("/telegram",methods=["GET","POST"])
 def telegram():
-    update = request.get_json()
-    if "message" in update and "text" in update["message"]:
-        # Extract the chat ID and message text from the update
-        chat_id = update["message"]["chat"]["id"]
-        text = update["message"]["text"]
+    data = request.get_json()
+    chat_id = None
+    text = None
+    if 'message' in data:
+        chat_id = data['message']['chat']['id']  # 🔹 Get chat_id
+        text = data['message'].get('text', '')   # 🔹 Get message text
+
+        print(f"Received message from chat_id {chat_id}: {text}")
 
     if text == '/start':
         r_text = "I'm a financial assistant. Ask me finance related questions?"
