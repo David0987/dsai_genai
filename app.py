@@ -82,74 +82,45 @@ def user_log():
 
     return(render_template("user_log.html",r=r))
 
-# @app.route("/telegram",methods=["GET","POST"])
-# def telegram():
-#     try:
-#         data = request.get_json()
-#         if not data:
-#             return render_template("telegram.html", r_text='Telegram Started')
-            
-#         if 'message' not in data:
-#             return render_template("telegram.html", r_text='Invalid message format')
-            
-#         chat_id = data['message']['chat']['id']
-#         text = data['message'].get('text', '')
-        
-#         console.log(f"Received message from chat_id {chat_id}: {text}")
-
-#         if text == '/start':
-#             r_text = "I'm a financial assistant. Ask me finance related questions?"
-#             return('ok', 200)
-#         else:
-#             system_prompt = "You are a financial expert. Answer ONLY questions related to finance, economics, investing, and financial markets. If the question is not related to finance, state that you cannot answer it."
-#             response = model.generate_content(f"{system_prompt}\n\nUser Query: {text}")
-#             r_text = response.text
-            
-#             payload = {'chat_id': chat_id, 'text': r_text}
-#             response = requests.post(
-#                 "https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/sendMessage",
-#                 json=payload
-#             )
-#             console.log(response)
-#             response.raise_for_status()
-#             return 'ok', 200
-            
-#     except requests.exceptions.RequestException as e:
-#         print(f"Error sending message to Telegram: {e}")
-#         return 'error', 404
-#     except Exception as e:
-#         print(f"Unexpected error: {e}")
-#         return render_template("telegram.html", r_text='An error occurred')
-
-
 @app.route("/telegram",methods=["GET","POST"])
 def telegram():
-    update = request.get_json()
-    if "message" in update and "text" in update["message"]:
-        # Extract the chat ID and message text from the update
-        chat_id = update["message"]["chat"]["id"]
-        text = update["message"]["text"]
-
-        if text == "/start":
-            r_text = "Welcome to the Gemini Telegram Bot! You can ask me any finance-related questions."
-        else:
-            # Process the message and generate a response
-            system_prompt = "You are a financial expert.  Answer ONLY questions related to finance, economics, investing, and financial markets. If the question is not related to finance, state that you cannot answer it."
-            prompt = f"{system_prompt}\n\nUser Query: {text}"
-            r = genmini_client.models.generate_content(
-                model=genmini_model,
-                contents=prompt
-            )
-            r_text = r.text
+    try:
+        data = request.get_json()
+        if not data:
+            return render_template("telegram.html", r_text='Telegram Started')
+            
+        if 'message' not in data:
+            return render_template("telegram.html", r_text='Invalid message format')
+            
+        chat_id = data['message']['chat']['id']
+        text = data['message'].get('text', '')
         
-        # Send the response back to the user
-        send_message_url = f"https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage"
-        requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
-    # Return a 200 OK response to Telegram
-    # This is important to acknowledge the receipt of the message
-    # and prevent Telegram from resending the message
-    # if the server doesn't respond in time
-    return('ok', 200)
+        console.log(f"Received message from chat_id {chat_id}: {text}")
+
+        if text == '/start':
+            r_text = "I'm a financial assistant. Ask me finance related questions?"
+            return('ok', 200)
+        else:
+            system_prompt = "You are a financial expert. Answer ONLY questions related to finance, economics, investing, and financial markets. If the question is not related to finance, state that you cannot answer it."
+            response = model.generate_content(f"{system_prompt}\n\nUser Query: {text}")
+            r_text = response.text
+            
+            payload = {'chat_id': chat_id, 'text': r_text}
+            response = requests.post(
+                "https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage",
+                json=payload
+            )
+            console.log(response)
+            response.raise_for_status()
+            return 'ok', 200
+            
+    except requests.exceptions.RequestException as e:
+        print(f"Error sending message to Telegram: {e}")
+        return 'error', 404
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return render_template("telegram.html", r_text='An error occurred')
+
 
 @app.route("/delete_log",methods=["GET","POST"])
 def delete_log():
