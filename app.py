@@ -95,7 +95,7 @@ def telegram():
         chat_id = data['message']['chat']['id']
         text = data['message'].get('text', '')
         
-        console.log(f"Received message from chat_id {chat_id}: {text}")
+        # console.log(f"Received message from chat_id {chat_id}: {text}")
 
         if text == '/start':
             r_text = "I'm a financial assistant. Ask me finance related questions?"
@@ -110,7 +110,8 @@ def telegram():
                 "https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage",
                 json=payload
             )
-            console.log(response)
+            requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
+            # console.log(response)
             response.raise_for_status()
             return 'ok', 200
             
