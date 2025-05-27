@@ -21,13 +21,17 @@ app = Flask(__name__)
 def index():
     return(render_template("index.html"))
 
+@app.route("/paynow",methods=["GET","POST"])
+def paynow():
+    return(render_template("paynow.html"))
+
 @app.route("/main",methods=["GET","POST"])
 def main():
     if request.method == "POST":
         q = request.form.get("q")
         print("where is the q",q)
         t = datetime.datetime.now()
-        
+
         conn = sqlite3.connect('user.db')
         c = conn.cursor()
         c.execute("insert into users(name,timestamp) values(?,?)",(q,t))
@@ -39,6 +43,23 @@ def main():
 @app.route("/gemini",methods=["GET","POST"])
 def gemini():
     return(render_template("gemini.html"))
+
+@app.route("/prediction",methods=["GET","POST"])
+def prediction():
+    if request.method == "POST":
+        sgd = float(request.form.get('sgd')) if request.form.get('sgd') else 0
+        # Formula to convert SGD to DBS stock price
+        # dbs_price = sgd * 0.75  # Example conversion rate
+        print("sgd: ",sgd)
+        dbs_price = 90.22858515 + (-50.60094302*sgd)
+        return render_template("prediction.html", dbs_price=dbs_price)
+    return render_template("prediction.html", dbs_price=None)
+
+@app.route("/prediction_reply",methods=["GET","POST"])
+def prediction_reply():
+    q = float(request.form.get("sgd"))
+    print(q)
+    return(render_template("prediction_reply.html",dbs_price=90.2 + (-50.6*q)))
 
 @app.route("/user_log",methods=["GET","POST"])
 def user_log():
@@ -76,6 +97,10 @@ def gemini_reply():
     r = r.text
 
     return(render_template("gemini_reply.html", r=r))
+
+@app.route("/logout",methods=["GET"])
+def logout():
+    return(render_template("index.html"))
 
 if __name__ == "__main__":
     # app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)

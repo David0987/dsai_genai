@@ -1,6 +1,11 @@
 flask
 gunicorn
-google-generativeai
+google-generativeai>=0.3.0
 google-auth
 python-dotenv
 pysqlite3
+langchain>=0.1.0
+langchain-google-genai>=0.0.5
+faiss-cpu>=1.7.4
+PyPDF2>=3.0.0
+python-docx>=0.8.11
