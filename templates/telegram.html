@@ -8,11 +8,13 @@
         <div class="reply-container">
             <h3>Gemini's Response:</h3>
             <div class="reply-content">
-                {{r}}
+                <div class="message-box">
+                    {{r_text}}
+                </div>
             </div>
         </div>
         <form action="/main" method="get">      
-            <input type="submit" value="Main">
+            <input type="submit" value="Main" class="main-btn">
         </form>
     </div>
 </body>
