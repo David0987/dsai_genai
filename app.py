@@ -7,8 +7,7 @@ import datetime
 import requests
 
 # set up telegram webhook
-# curl -F "url=https://dsai-genai-ok5a.onrender.com/telegram" 
-# https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/setWebhook
+# curl -F "url=https://dsai-genai-ok5a.onrender.com/telegram" https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/setWebhook
 
 
 gemini_api_key = os.getenv("GEMINI_API_KEY")
@@ -96,7 +95,7 @@ def telegram():
         chat_id = data['message']['chat']['id']
         text = data['message'].get('text', '')
         
-        print(f"Received message from chat_id {chat_id}: {text}")
+        console.log(f"Received message from chat_id {chat_id}: {text}")
 
         if text == '/start':
             r_text = "I'm a financial assistant. Ask me finance related questions?"
@@ -110,6 +109,7 @@ def telegram():
                 "https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/sendMessage",
                 json=payload
             )
+            console.log(response)
             response.raise_for_status()
             return 'ok', 200
             
