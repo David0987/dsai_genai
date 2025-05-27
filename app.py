@@ -110,7 +110,7 @@ def telegram():
                 "https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage",
                 json=payload
             )
-            requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
+            # requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
             # console.log(response)
             response.raise_for_status()
             return 'ok', 200
