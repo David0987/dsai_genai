@@ -4,6 +4,12 @@ from config import Config
 import os
 import sqlite3
 import datetime
+import requests
+
+# set up telegram webhook
+# curl -F "url=https://dsai-genai-ok5a.onrender.com/telegram" 
+# https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/setWebhook
+
 
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
@@ -27,9 +33,9 @@ def paynow():
 
 @app.route("/main",methods=["GET","POST"])
 def main():
+    # setting up webhook
     if request.method == "POST":
         q = request.form.get("q")
-        print("where is the q",q)
         t = datetime.datetime.now()
 
         conn = sqlite3.connect('user.db')
@@ -76,6 +82,40 @@ def user_log():
     conn.close()
 
     return(render_template("user_log.html",r=r))
+
+@app.route("/telegram",methods=["GET","POST"])
+def telegram():
+    update = request.get_json()
+    if "message" in update and "text" in update["message"]:
+        # Extract the chat ID and message text from the update
+        chat_id = update["message"]["chat"]["id"]
+        text = update["message"]["text"]
+
+    if text == '/start':
+        r_text = "I'm a financial assistant. Ask me finance related questions?"
+    else:
+        system_prompt = "You are a financial expert.  Answer ONLY questions related to finance, economics, investing, and financial markets. If the question is not related to finance, state that you cannot answer it."
+        prompt = f"{system_prompt}\n\nUser Query: {text}"
+        response = model.generate_content(prompt)
+        r_text = response.text
+
+    # Telegram Bot API endpoint
+    TELEGRAM_API_URL = f"https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/sendMessage"
+    
+    # Send message to Telegram
+    payload = {
+        'chat_id': chat_id,
+        'text': r_text
+    }
+    
+    try:
+        response = requests.post(TELEGRAM_API_URL, json=payload)
+        response.raise_for_status()  # Raise an exception for bad status codes
+    except requests.exceptions.RequestException as e:
+        print(f"Error sending message to Telegram: {e}")
+
+    return(render_template("telegram.html", r_text=r_text))
+
 
 @app.route("/delete_log",methods=["GET","POST"])
 def delete_log():
