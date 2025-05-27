@@ -143,7 +143,7 @@ def telegram():
             r_text = r.text
         
         # Send the response back to the user
-        send_message_url = f"https://api.telegram.org/bot8156772645:AAFbqcPPVIxsnucEw_c2qT-wVh6B1zQWyz8/sendMessage"
+        send_message_url = f"https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage"
         requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
     # Return a 200 OK response to Telegram
     # This is important to acknowledge the receipt of the message
