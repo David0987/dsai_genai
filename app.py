@@ -99,22 +99,18 @@ def telegram():
 
         if text == '/start':
             r_text = "I'm a financial assistant. Ask me finance related questions?"
-            return('ok', 200)
         else:
             system_prompt = "You are a financial expert. Answer ONLY questions related to finance, economics, investing, and financial markets. If the question is not related to finance, state that you cannot answer it."
             response = model.generate_content(f"{system_prompt}\n\nUser Query: {text}")
             r_text = response.text
-            
-            payload = {'chat_id': chat_id, 'text': r_text}
-            response = requests.post(
-                "https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage",
-                json=payload
-            )
-            # requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
-            # console.log(response)
-            response.raise_for_status()
-            return 'ok', 200
-            
+
+        payload = {'chat_id': chat_id, 'text': r_text}
+        response = requests.post(
+            "https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/sendMessage",
+            json=payload
+        )
+        response.raise_for_status()
+        return 'ok', 200
     except requests.exceptions.RequestException as e:
         print(f"Error sending message to Telegram: {e}")
         return 'error', 404
