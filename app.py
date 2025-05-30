@@ -9,7 +9,6 @@ import requests
 # set up telegram webhook
 # curl -F "url=https://dsai-genai-ok5a.onrender.com/telegram" https://api.telegram.org/bot8074722179:AAEPKM37HrgOzAwtPHEdd0fbCxKgALexRdo/setWebhook
 
-
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 # conn = sqlite3.connect('user.db')
@@ -32,7 +31,6 @@ def paynow():
 
 @app.route("/main",methods=["GET","POST"])
 def main():
-    # setting up webhook
     if request.method == "POST":
         q = request.form.get("q")
         t = datetime.datetime.now()
@@ -82,6 +80,22 @@ def user_log():
 
     return(render_template("user_log.html",r=r))
 
+@app.route("/show_users",methods=["GET"])
+def show_users():
+    conn = sqlite3.connect('user.db')
+    c = conn.cursor()
+    c.execute("select * from users")
+    r = ""
+    for row in c:
+        print(row)
+        r = r+str(row) + "\n"
+        print(r)
+    c.close()
+    print("r: ",r)
+    conn.close()
+
+    return(render_template("show_users.html",r=r))
+
 @app.route("/telegram",methods=["GET","POST"])
 def telegram():
     if request.method == "POST":
@@ -95,7 +109,6 @@ def telegram():
         chat_id = data['message']['chat']['id']
         text = data['message'].get('text', '')
         
-        # console.log(f"Received message from chat_id {chat_id}: {text}")
 
         if text == '/start':
             r_text = "I'm a financial assistant. Ask me finance related questions?"

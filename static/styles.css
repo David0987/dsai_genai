@@ -1,4 +1,3 @@
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
@@ -51,6 +50,28 @@ input[type="submit"] {
     max-width: 300px;
 }
 
+.button-grid {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.column form {
+    margin: 0;
+}
+
+.column input[type="submit"] {
+    max-width: none;
+}
+
 input, button {
     width: 100%;
     padding: 10px;
@@ -70,7 +91,6 @@ button {
 button:hover {
     background-color: #0056b3;
 }
-
 
 p {
     margin-top: 20px;

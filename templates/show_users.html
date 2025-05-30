@@ -1,0 +1,34 @@
+<head>
+    <meta name ="viewport" content ="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="user-records">
+            <h3>All Users</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in r.split('\n') %}
+                        {% if record %}
+                            <tr>
+                                {% set fields = record.strip('()').split(',') %}
+                                <td>{{ fields[0].strip("'") }}</td>
+                                <td>{{ fields[1].strip() }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <form action="/main" method="get">      
+            <input type="submit" value="Back to Main">
+        </form>
+    </div>
+</body> 

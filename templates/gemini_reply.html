@@ -7,8 +7,12 @@
     <div class="container">
         <div class="reply-container">
             <h3>Gemini's Response:</h3>
-            <div class="reply-content">
-                {{r}}
+            <div class="reply-content newspaper-format">
+                <article class="newspaper-article">
+                    <div class="article-content">
+                        {{r|safe}}
+                    </div>
+                </article>
             </div>
         </div>
         <form action="/main" method="get">      

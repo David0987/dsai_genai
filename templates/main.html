@@ -5,23 +5,32 @@
 <body>
     <div class="container">
         <h2>Web Application</h2>
-        <form action="/gemini" method="get">
-            <input type="submit" value="Ask Gemini">
-        </form>
-        <form action="/paynow" method="post">
-            <input type="submit" value="Transfer Money">
-        </form>
+        <div class="button-grid">
+            <div class="column">
+                <form action="/user_log" method="get">
+                    <input type="submit" value="Add User">
+                </form>
+                <form action="/show_users" method="get">
+                    <input type="submit" value="Show Users">
+                </form>
+                <form action="/delete_log" method="get">
+                    <input type="submit" value="Delete User">
+                </form>
+            </div>
+            <div class="column">
+                <form action="/gemini" method="get">
+                    <input type="submit" value="Ask Gemini">
+                </form>
+                <form action="/paynow" method="post">
+                    <input type="submit" value="Transfer Money">
+                </form>
+                <form action="/prediction" method="get">
+                    <input type="submit" value="Prediction">
+                </form>
+            </div>
+        </div>
         <form action="/telegram" method="get">
             <input type="submit" value="Start Telegram">
-        </form>
-        <form action="/prediction" method="get">
-            <input type="submit" value="Prediction">
-        </form>
-        <form action="/user_log" method="get">
-            <input type="submit" value="Add User">
-        </form>
-        <form action="/delete_log" method="get">
-            <input type="submit" value="Delete User">
         </form>
         <form action="/logout" method="get">
             <input type="submit" value="Log out">
